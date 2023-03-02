@@ -2,6 +2,11 @@ import pymongo
 from pymongo import MongoClient
 from db_properties import *
 
+cluster=MongoClient("mongodb+srv://anirudhaun:cY5hdsdwvg1aHTex@cluster0.suvfptn.mongodb.net/?retryWrites=true&w=majority")
+
+database=cluster[DATABASE_NAME]
+source_collection=database[SOURCE_COLLECTION]
+rssfeed_collection=database[RSS_FEED_COLLECTION]
 
 def insert_one(document):
     result = source_collection.insert_one(document)
@@ -41,25 +46,15 @@ def get_sources():
             print(i)
 
 
-def get_article_details():
+def get_article_details(limit,last_access_time): 
+    if last_access_time==None:
+        articles = source_collection.find({},{}).limit(limit)
+        for article in articles:
+                print(article)
+    else:
+         articles = source_collection.find().limit(limit)
     
-   
-    articles = source_collection.find().sort('Timestamp', -1).limit(10)
-    
-    article_details = []
-    for article in articles:
-        details = {
-            'title': article['Title'],
-            'summary': article['Summary'],
-            'image_url': article['CoverImgURL'],
-            'timestamp': article['Timestamp'],
-            'source': article['Source'],
-            'tags': article['Tags']
-        }
-        article_details.append(details)
-   
-    for articles in article_details:
-         print(article)
+
 
 def delete_documents(query):
       results = source_collection.delete_many(query)
