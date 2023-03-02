@@ -61,19 +61,20 @@ def get_article_details():
     for articles in article_details:
          print(article)
 
-def delete_documents():
-      results = source_collection.delete_many()
+def delete_documents(query):
+      results = source_collection.delete_many(query)
       return results
 
-def delete_document():
-    result = source_collection.delete_one()
+def delete_document(query):
+    result = source_collection.delete_one(query)
     return result
 
-def update_documents():
-    results = source_collection.update_many()
+def update_documents(query,update):
+    results = source_collection.update_many(query,update)
     for i in results:
         print(i)
 
-def update_document():
-    result = source_collection.update_one()
+def update_document(query,update):
+    result = source_collection.update_one(query,update)
     return result
+
