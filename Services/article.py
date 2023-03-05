@@ -11,4 +11,5 @@ def get_article():
 def get_tag():
     tag=get_tag_news()
     return tag
-   
+
+get_relative_links()
