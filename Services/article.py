@@ -1,7 +1,14 @@
 from db_properties import *
 from mongo_utils import *
 
-get_article_details()
-get_tag_news()
-get_relative_links()
+def get_article():
+    article_details = get_article_details()
+    articles = []
+    for article in article_details:
+        articles.append(article)
+    return articles
+ 
+def get_tag():
+    tag=get_tag_news()
+    return tag
    
