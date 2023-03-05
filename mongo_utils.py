@@ -46,13 +46,16 @@ def get_sources():
             print(i)
 
 
-def get_article_details(limit,last_access_time): 
+def get_article_details(limit, last_access_time): 
     if last_access_time==None:
-        articles = source_collection.find({},{}).limit(limit)
-        for article in articles:
-                print(article)
+        articles = source_collection.find({}, {}).limit(limit)
     else:
-         articles = source_collection.find().limit(limit)
+        articles = source_collection.find({'last_access_time': {'$gt': last_access_time}}).limit(limit)
+
+    article_list = []
+    for article in articles:
+        article_list.append(article)
+    return article_list
     
 
 
