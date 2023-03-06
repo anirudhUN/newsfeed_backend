@@ -78,8 +78,8 @@ def get_successive_articles(collection,n, page):
     
 
 
-def delete_documents(collection_name):
-    collection_name.delete_many({})
+def delete_documents(collection_name,query):
+    collection_name.delete_many({query})
 
 def delete_document(collection_name,query):
     result = collection_name.delete_one(query)
