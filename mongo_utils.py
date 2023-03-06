@@ -104,7 +104,35 @@ def get_article_details(limit, last_access_time):
     for article in articles:
         article_list.append(article)
     return article_list
+
+def get_relative_links(id):
+    # Retrieve the base document by its ID
+    #print("Documents")
+    base_document = source_collection.find_one({'_id': id})
+    if base_document is None:
+        print('Document not found')
+        return []
+    else: 
+        return base_document
     
+    # Get all the general tags in the base document
+    #print("\n TAGS")
+    general_tags = []
+    for tag in base_document['Tags']:
+        general_tags.append(tag)
+        print(tag)
+    
+    
+    # Fetch one document with the same tag for each general tag other than the base document
+    related_documents = []
+    #print("\n\n Related")
+    for tag in general_tags:
+        related_document = source_collection.find_one({'_id': {'$ne': id}, 'Tags': tag})
+        related_documents.append(related_document)
+        print(related_document)
+    
+    return related_documents
+
 
 
 
