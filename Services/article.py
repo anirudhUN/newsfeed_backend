@@ -15,4 +15,6 @@ def get_tag():
     tag=get_tag_news()
     return tag
 
-get_relative_links()
+def relative_links(id):
+    related_documents = get_relative_links(id)
+    return related_documents
