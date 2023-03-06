@@ -105,6 +105,12 @@ def get_article_details(limit, last_access_time):
         article_list.append(article)
     return article_list
 
+def get_categories(id):
+    tags = []
+    for tag in base_document['Tags']:
+       tags.append(tag)
+    return tags
+
 def get_relative_links(id):
     # Retrieve the base document by its ID
     #print("Documents")
