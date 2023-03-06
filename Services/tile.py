@@ -14,7 +14,11 @@ def get_article():
     for article in article_details:
         articles.append(article)
     return articles
-  
+
+def get_tag():
+    tag=get_tag_news()
+    return tag
+
 def relative_links(id):
     related_documents = get_relative_links(id)
     return related_documents
