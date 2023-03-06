@@ -94,16 +94,16 @@ def update_document(collection_name,query,update):
     result = collection_name.update_one(query,update)
     return result
 
-def get_article_details(limit, last_access_time): 
-    if last_access_time==None:
-        articles = source_collection.find({}, {}).limit(limit)
-    else:
-        articles = source_collection.find({'last_access_time': {'$gt': last_access_time}}).limit(limit)
-
-    article_list = []
+def get_article_details(collection_name,id): 
+    articles = collection_name.find({'_id':id})
     for article in articles:
-        article_list.append(article)
-    return article_list
+        print(article["Title"])
+        print(article["Summary"])
+        print(article["Category"])
+        print(article["AuthorNames"])
+        print(article["Source"])
+        print(article["Comments"])
+        print("")
     
 
 
