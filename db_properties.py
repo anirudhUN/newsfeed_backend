@@ -2,7 +2,7 @@ DATABASE_NAME="Newsfeed"
 SOURCE_COLLECTION="source"
 TRIAL_SOURCE="source_coll"
 RSS_FEED_COLLECTION="rssData"
-
+PAGE_COUNT=10
 
 #categories
 APPS="apps"

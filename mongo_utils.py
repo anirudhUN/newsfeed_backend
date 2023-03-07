@@ -49,34 +49,23 @@ def get_cat_news(collection_name,category):
 
 def get_tag_news(collection_name,tag):
       results=collection_name.find({"Tags":tag},{})
-      for i in results:
-            print(i)
+      return (list(results))
 
 
 def get_source_news(collection_name,source):
       results=collection_name.find({"Source":source},{})
-      for i in results:
-            print(i)
+      return list(results)
 
 
 def get_sources(collection_name):
       results=collection_name.distinct("Source")
-      for i in results:
-            print(i)
+      return (list(results))
 
 
 def get_successive_articles(collection,n, page):
     skip_count = (page - 1) * n
-    cursor = collection.find().skip(skip_count).limit(n)
-    article_list = list(cursor)
-    for article in article_list:
-        print(article["title"])
-        print(article["published"])
-        print(article["description"])
-        print(article["category"])
-        print("")
-    
-
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).skip(skip_count).limit(n)
+    return (list(cursor))
 
 def delete_documents(collection_name,query):
     collection_name.delete_many(query)
@@ -94,16 +83,9 @@ def update_document(collection_name,query,update):
     result = collection_name.update_one(query,update)
     return result
 
-def get_article_details(collection_name,id): 
-    articles = collection_name.find({'_id':id})
-    for article in articles:
-        print(article["Title"])
-        print(article["Summary"])
-        print(article["Category"])
-        print(article["AuthorNames"])
-        print(article["Source"])
-        print(article["Comments"])
-        print("")
+def get_article_details(collection_name): 
+    articles = collection_name.find({},{"title":1,"description":1})
+    return (list(articles))
     
 
 
