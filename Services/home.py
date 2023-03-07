@@ -1,8 +1,3 @@
-import sys
-sys.path.insert(0, '/path/to/other/folder') # path from newsfeed_backend to services folder, path can change so not specified. 
-
-from db_properties import *
-from mongo_utils import *
 
 def init_home_page():
     categories = get_categories()
