@@ -85,6 +85,9 @@ def get_article_details(collection_name):
     articles = collection_name.find({},{"title":1,"description":1})
     return (list(articles))
     
-
+def relative_links(collection_name,article_id):
+    category = collection_name.find({"_id":article_id},{"category":1})
+    links=collection_name.find({"category":category},{"title":1,"link":1})
+    return (list(links))
 
 
