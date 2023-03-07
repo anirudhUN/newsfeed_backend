@@ -4,13 +4,12 @@ sys.path.insert(0, '/path/to/other/folder') # path from newsfeed_backend to serv
 from db_properties import *
 from mongo_utils import *
 
-def get_category():
-    category=get_categories()
-    return category
+def init_home_page():
+    categories = get_categories()
+    articles = list(get_article_details())
+    return({'categories':categories, 'articles':articles,'page':0})
 
-def get_article():
-    article_details = get_article_details()
-    articles = []
-    for article in article_details:
-        articles.append(article)
-    return articles
+def update_home_page(last_page_count):
+    page_to_fetch = last_page_count + 1
+    articles = get_successive_articles(SOURCE_COLLECTION,PAGE_COUNT,page_to_fetch)
+    return list(articles)
