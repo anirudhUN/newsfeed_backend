@@ -4,7 +4,7 @@ sys.path.insert(0, '/path/to/other/folder') # path from newsfeed_backend to serv
 from db_properties import *
 from mongo_utils import *
 
-def init_article():
+def init_tile():
     categories = get_categories()
     articles = list(get_article_details())
     tag = list(get_tag_news())
