@@ -38,13 +38,11 @@ def insert_many(documents):
 
 def get_categories(collection_name):
     categories=collection_name.distinct('category')
-    for category in categories:
-       print(category)
+    return (list(categories))
 
 def get_cat_news(collection_name,category):
         results=collection_name.find({"category":category},{})
-        for i in results:
-            print(i)
+        return (list(results))
 
 
 def get_tag_news(collection_name,tag):
