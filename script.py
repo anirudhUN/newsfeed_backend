@@ -17,5 +17,3 @@ def update_rss(collection):
     collection.update_many({}, {'$set': {'Status': "True"}})
     
     print(f"{collection.count_documents({})} documents updated.")
-
-update_rss(rssfeed_collection)
