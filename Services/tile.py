@@ -1,4 +1,5 @@
 
+
 def init_tile():
     categories = get_categories()
     articles = list(get_article_details())

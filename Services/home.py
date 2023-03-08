@@ -15,3 +15,4 @@ def category_page(user_cat):
          cat_news = get_cat_news(user_cat)
     
     return {"category": user_cat, "articles": cat_news}
+

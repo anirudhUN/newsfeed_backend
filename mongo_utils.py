@@ -1,12 +1,32 @@
 import pymongo
 from pymongo import MongoClient
 from db_properties import *
+import feedparser
 
 cluster=MongoClient("mongodb+srv://anirudhaun:cY5hdsdwvg1aHTex@cluster0.suvfptn.mongodb.net/?retryWrites=true&w=majority")
 
 database=cluster[DATABASE_NAME]
 source_collection=database[SOURCE_COLLECTION]
 rssfeed_collection=database[RSS_FEED_COLLECTION]
+trial_collection=database[TRIAL_SOURCE]
+
+
+#to insert directly using rss feed url
+def insert_rss_doc(url):
+    feed=feedparser.parse(url)
+    for item in feed.entries:
+        author = getattr(item, 'author', None)
+        doc = {
+            'title': item.title,
+            'link': item.link,
+            'description': item.description,
+            'published': item.published,
+            'author':author,
+            'category':item.category
+        }
+        trial_collection.insert_one(doc)
+
+
 
 def insert_one(document):
     result = source_collection.insert_one(document)
@@ -16,60 +36,58 @@ def insert_many(documents):
     result = source_collection.insert_many(documents)
     return result
 
-def get_categories():
-    categories = source_collection.distinct('category')
-    for category in categories:
-        print(category)
+def get_categories(collection_name):
+    categories=collection_name.distinct('category')
+    return (list(categories))
+
+def get_cat_news(collection_name,category):
+        results=collection_name.find({"category":category},{})
+        return (list(results))
 
 
-def get_cat_news(category):
-        results=source_collection.find({"Category":category},{})
-        for i in results:
-            print(i)
+def get_tag_news(collection_name,tag):
+      results=collection_name.find({"Tags":tag},{})
+      return (list(results))
 
 
-def get_tag_news(tag):
-      results=source_collection.find({"Tags":tag},{})
-      for i in results:
-            print(i)
+def get_source_news(collection_name,source):
+      results=collection_name.find({"Source":source},{})
+      return list(results)
 
 
-def get_source_news(source):
-      results=source_collection.find({"Source":source},{})
-      for i in results:
-            print(i)
+def get_sources(collection_name):
+      results=collection_name.distinct("Source")
+      return (list(results))
 
 
-def get_sources():
-      results=source_collection.distinct("Source")
-      for i in results:
-            print(i)
+def get_successive_articles(collection,n, page):
+    skip_count = (page - 1) * n
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).skip(skip_count).limit(n)
+    return (list(cursor))
 
+def delete_documents(collection_name,query):
+    collection_name.delete_many(query)
 
-def get_article_details(limit,last_access_time): 
-    if last_access_time==None:
-        articles = source_collection.find({},{}).limit(limit)
-        for article in articles:
-                print(article)
-    else:
-         articles = source_collection.find().limit(limit)
-    
-
-
-def delete_documents(query):
-      results = source_collection.delete_many(query)
-      return results
-
-def delete_document(query):
-    result = source_collection.delete_one(query)
+def delete_document(collection_name,query):
+    result = collection_name.delete_one(query)
     return result
 
-def update_documents(query,update):
-    results = source_collection.update_many(query,update)
+def update_documents(collection_name,query,update):
+    results = collection_name.update_many(query,update)
     for i in results:
         print(i)
 
-def update_document(query,update):
-    result = source_collection.update_one(query,update)
+def update_document(collection_name,query,update):
+    result = collection_name.update_one(query,update)
     return result
+
+def get_article_details(collection_name): 
+    articles = collection_name.find({},{"title":1,"description":1})
+    return (list(articles))
+    
+def relative_links(collection_name,article_id):
+    category = collection_name.find({"_id":article_id},{"category":1})
+    links=collection_name.find({"category":category},{"title":1,"link":1})
+    return (list(links))
+
 
