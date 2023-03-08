@@ -1,5 +1,4 @@
-import sys
-sys.path.append('C:\Users\aniru\Desktop\newsfeed')
+
 from db_properties import *
 from mongo_utils import *
 
