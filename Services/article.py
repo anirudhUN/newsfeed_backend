@@ -11,6 +11,9 @@ def init_article():
         related_link = f'<a href="{url}?tag={tag}">{tag}</a>'
         return(related_link)
     
+    for article in article.values():
+        return(article)
+    
    
 
 
