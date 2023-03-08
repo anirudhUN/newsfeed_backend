@@ -1,3 +1,5 @@
+from db_properties import *
+from mongo_utils import *
 
 def init_home_page():
     categories = get_categories()
@@ -13,6 +15,6 @@ def category_page(user_cat):
     categories = get_categories()
     if user_cat in categories:
          cat_news = get_cat_news(user_cat)
-    
-    return {"category": user_cat, "articles": cat_news}
+   
+  return {"category": user_cat, "articles": cat_news}
 
