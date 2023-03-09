@@ -85,7 +85,7 @@ def get_article_details(collection_name,limit=0):
    else:
         return list(collection_name.find())
     
-def relative_links(collection_name,article_id):
+def related_links(collection_name,article_id):
     category = collection_name.find({"_id":article_id},{"category":1})
     links=collection_name.find({"category":category},{"title":1,"link":1})
     return list(links)
