@@ -2,19 +2,23 @@ from properties.db_properties import *
 from utils.mongo_utils import *
 
 def init_article():
-    article = get_article_details(source_collection, limit=1)[0]
+    article_id = 'article_id'
+    article = get_article_details(article_id)
     tags = article['tags']
-    related_articles = set()
+    category = article['category']
+
+    related_articles = []
     for tag in tags:
+        related_article = source_collection.find_one({'tags': tag, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
+        if related_article:
+            related_articles.append(related_article)
 
-    
+    for cat in category:
+        related_article = source_collection.find_one({'category': cat, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
+        if related_article:
+            related_articles.append(related_article)
 
-        related_articles = source_collection.find({'tags': tag})
-        for related_article in related_articles:
-            if related_article['_id'] != article['_id'] and related_article not in related_articles:
-                related_articles.add(related_article)
-
-    return related_articles,article
+    return related_articles, article
     
    
 

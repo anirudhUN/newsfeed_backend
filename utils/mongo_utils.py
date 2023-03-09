@@ -1,6 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 from properties.db_properties import *
+from bson import ObjectId
 import feedparser
 
 cluster=MongoClient("mongodb+srv://anirudhaun:cY5hdsdwvg1aHTex@cluster0.suvfptn.mongodb.net/?retryWrites=true&w=majority")
@@ -78,10 +79,12 @@ def update_documents(collection_name,query,update):
 def update_document(collection_name,query,update):
     result = collection_name.update_one(query,update)
     return result
-
-def get_article_details(collection_name,id): 
-    articles = collection_name.find({'_id':id},{"Title":1,"Summary":1,"Category":1,"AuthorNames":1,"Source":1,"Comments":1})
-    for article in articles:
+    
+def get_article_details(article_id):
+    article = source_collection.find_one({'_id': ObjectId(article_id)},{"Title":1,"Summary":1,"Category":1,"AuthorNames":1,"Source":1,"Comments":1})
+    if article is None:
+        return None
+    else:
         return article
     
 def related_links(collection_name,article_id):
