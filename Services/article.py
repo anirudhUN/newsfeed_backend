@@ -13,6 +13,7 @@ def init_article():
     
     for article in article.values():
         return(article)
+init_article()
     
    
 
