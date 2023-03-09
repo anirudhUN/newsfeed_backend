@@ -83,7 +83,6 @@ def update_document(collection_name,query,update):
 def get_article_details(article_id):
     article = source_collection.find_one({'_id': ObjectId(article_id)},{"Title":1,"Summary":1,"Category":1,"AuthorNames":1,"Source":1,"Comments":1})
     if article is None:
-        print(f"No article found with ID {article_id}")
         return None
     else:
         return article
