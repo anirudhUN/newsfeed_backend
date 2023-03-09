@@ -1,6 +1,6 @@
 import pymongo
 from pymongo import MongoClient
-from db_properties import *
+from properties.db_properties import *
 import feedparser
 
 cluster=MongoClient("mongodb+srv://anirudhaun:cY5hdsdwvg1aHTex@cluster0.suvfptn.mongodb.net/?retryWrites=true&w=majority")
@@ -38,16 +38,16 @@ def insert_many(documents):
 
 def get_categories(collection_name):
     categories=collection_name.distinct('category')
-    return (list(categories))
+    return list(categories)
 
 def get_cat_news(collection_name,category):
         results=collection_name.find({"category":category},{})
-        return (list(results))
+        return list(results)
 
 
 def get_tag_news(collection_name,tag):
       results=collection_name.find({"Tags":tag},{})
-      return (list(results))
+      return list(results)
 
 
 def get_source_news(collection_name,source):
@@ -57,13 +57,13 @@ def get_source_news(collection_name,source):
 
 def get_sources(collection_name):
       results=collection_name.distinct("Source")
-      return (list(results))
+      return list(results)
 
 
 def get_successive_articles(collection,n, page):
     skip_count = (page - 1) * n
     cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).skip(skip_count).limit(n)
-    return (list(cursor))
+    return list(cursor)
 
 def delete_documents(collection_name,query):
     collection_name.delete_many(query)
@@ -74,8 +74,6 @@ def delete_document(collection_name,query):
 
 def update_documents(collection_name,query,update):
     results = collection_name.update_many(query,update)
-    for i in results:
-        print(i)
 
 def update_document(collection_name,query,update):
     result = collection_name.update_one(query,update)
@@ -90,6 +88,6 @@ def get_article_details(collection_name,limit=0):
 def relative_links(collection_name,article_id):
     category = collection_name.find({"_id":article_id},{"category":1})
     links=collection_name.find({"category":category},{"title":1,"link":1})
-    return (list(links))
+    return list(links)
 
 
