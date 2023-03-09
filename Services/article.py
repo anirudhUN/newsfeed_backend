@@ -1,5 +1,5 @@
-from db_properties import *
-from mongo_utils import *
+from properties.db_properties import *
+from utils.mongo_utils import *
 
 def init_article():
     article = get_article_details(SOURCE_COLLECTION, limit=1)[0]
