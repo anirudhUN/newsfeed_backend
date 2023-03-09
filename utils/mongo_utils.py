@@ -79,11 +79,10 @@ def update_document(collection_name,query,update):
     result = collection_name.update_one(query,update)
     return result
 
-def get_article_details(collection_name,limit=0): 
-   if limit > 0:                                   
-        return list(collection_name.find().limit(limit))
-   else:
-        return list(collection_name.find())
+def get_article_details(collection_name,id): 
+    articles = collection_name.find({'_id':id},{"Title":1,"Summary":1,"Category":1,"AuthorNames":1,"Source":1,"Comments":1})
+    for article in articles:
+        return article
     
 def related_links(collection_name,article_id):
     category = collection_name.find({"_id":article_id},{"category":1})
