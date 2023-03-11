@@ -2,19 +2,20 @@ from properties.db_properties import *
 from utils.mongo_utils import *
 
 def init_home_page():
-    categories = get_categories()
+    categories = get_categories(source_collection)
     articles = list(get_article_details())
     return({'categories':categories, 'articles':articles,'page':0})
 
 def update_home_page(last_page_count):
     page_to_fetch = last_page_count + 1
-    articles = get_successive_articles(SOURCE_COLLECTION,PAGE_COUNT,page_to_fetch)
+    articles = get_successive_articles(source_collection,PAGE_COUNT,page_to_fetch)
     return list(articles)
 
 def category_bar(user_cat):
-    categories = get_categories()
+    categories = get_categories(source_collection)
     if user_cat in categories:
-         cat_news = get_cat_news(user_cat)
-   
+        cat_news = get_cat_news(source_collection,user_cat)
+    else:
+        cat_news = []
     return {"category": user_cat, "articles": cat_news}
 
