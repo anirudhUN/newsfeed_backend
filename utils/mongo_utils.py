@@ -80,12 +80,17 @@ def update_document(collection_name,query,update):
     result = collection_name.update_one(query,update)
     return result
     
-def get_article_details(article_id):
-    article = source_collection.find_one({'_id': ObjectId(article_id)},{"Title":1,"Summary":1,"Category":1,"AuthorNames":1,"Source":1,"Comments":1})
-    if article is None:
-        return None
+def get_article_details(article_id=None):
+    if article_id:
+        article = source_collection.find_one({'_id': ObjectId(article_id)})
+        if article is None:
+            print(f"No article found with ID {article_id}")
+            return None
+        else:
+            return article
     else:
-        return article
+        articles = source_collection.find()
+        return [article for article in articles]
     
 def related_links(collection_name,article_id):
     category = collection_name.find({"_id":article_id},{"category":1})
