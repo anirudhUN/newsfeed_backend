@@ -1,10 +1,10 @@
 from properties.db_properties import *
 from utils.mongo_utils import *
 
-def init_home_page():
+def init_home_page(last_page_count):
     categories = get_categories(source_collection)
-    articles = list(get_article_details())
-    return({'categories':categories, 'articles':articles,'page':0})
+    articles = list(get_successive_articles(source_collection,PAGE_COUNT,last_page_count))
+    return {'categories':categories, 'articles':articles,'page':last_page_count}
 
 def update_home_page(last_page_count):
     page_to_fetch = last_page_count + 1
