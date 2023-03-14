@@ -8,6 +8,7 @@ from pymongo import MongoClient
 from properties.db_properties import *
 from bson import ObjectId
 import feedparser
+from datetime import datetime
 
 cluster=MongoClient("mongodb+srv://anirudhaun:cY5hdsdwvg1aHTex@cluster0.suvfptn.mongodb.net/?retryWrites=true&w=majority")
 
@@ -18,19 +19,20 @@ trial_collection=database[TRIAL_SOURCE]
 
 
 #to insert directly using rss feed url
-def insert_rss_doc(url):
-    feed=feedparser.parse(url)
+def insert_rss_doc(collection,url, FIELD_MAP):
+    feed = feedparser.parse(url)
     for item in feed.entries:
-        author = getattr(item, 'author', None)
-        doc = {
-            'title': item.title,
-            'link': item.link,
-            'description': item.description,
-            'published': item.published,
-            'author':author,
-            'category':item.category
-        }
-        trial_collection.insert_one(doc)
+        doc = {}
+        for field, names in FIELD_MAP.items():
+            for name in names:
+                if name in item:
+                    if field == 'published':
+                        date_obj = datetime.strptime(item[name], '%a, %d %b %Y %H:%M:%S %z')
+                        doc[field] = date_obj
+                    else:
+                        doc[field] = item[name]
+                    break
+        collection.insert_one(doc)
 
 
 
