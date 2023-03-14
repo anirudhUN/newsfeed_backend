@@ -98,6 +98,7 @@ def related_links(collection_name,article_id):
     links=collection_name.find({"category":category},{"title":1,"link":1})
     return list(links)
 
+
 def get_related_articles(collection,article_id):
     article = get_article_details(article_id)
     tags = article['tags']
@@ -119,6 +120,7 @@ def get_related_articles(collection,article_id):
                 break
 
     return related_articles
+
 
 
 if __name__=="__main__":

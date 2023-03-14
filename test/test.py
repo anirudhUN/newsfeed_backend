@@ -15,3 +15,5 @@ get_cat_news(trial_collection,APPS)
 #get_source_news(source_collection,"The Verge")
 
 #get_successive_articles(trial_collection,10,2)
+
+#init_article('article_id')    
