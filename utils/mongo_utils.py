@@ -35,7 +35,6 @@ def insert_rss_doc(collection,url, FIELD_MAP):
         collection.insert_one(doc)
 
 
-
 def insert_one(document):
     result = source_collection.insert_one(document)
     return result
@@ -123,3 +122,5 @@ def get_related_articles(article_id):
     return related_articles
 
 
+if __name__=="__main__":
+    insert_rss_doc(trial_collection,"https://mobilesyrup.com/feed/",FIELD_MAP)
