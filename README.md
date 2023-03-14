@@ -4,7 +4,7 @@ This is a web application that provides users with the latest technology-related
 
 Users can choose to filter news articles based on categories such as laptops, Android, gaming, and more. The application also features a search function that enables users to find articles related to specific topics or keywords.
 
-The application is built using modern web development technologies and the popular database MongoDB. It also uses APIs to fetch and display news articles.
+The application is built using modern web development technologies and the popular database MongoDB. It also uses APIs to fetch and display news articles.......
 
 The goal of this project is to create a convenient and engaging platform for users to stay up-to-date with the latest developments in the world of technology.
 
