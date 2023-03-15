@@ -72,7 +72,7 @@ def get_sources(collection_name):
 
 def get_successive_articles(collection,n, page):
     skip_count = (page - 1) * n
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).skip(skip_count).limit(n)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).sort("published", -1).skip(skip_count).limit(n)
     return list(cursor)
 
 def delete_documents(collection_name,query):
