@@ -75,6 +75,11 @@ def get_successive_articles(collection,n, page):
     cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).sort("published", -1).skip(skip_count).limit(n)
     return list(cursor)
 
+def get_successive_articles_for_category(collection, category, n, page):
+    skip_count = (page - 1) * n
+    cursor = collection.find({"category": category},{"title":1, "published":1, "description":1, "category":1}).skip(skip_count).limit(n)
+    return list(cursor)
+
 def delete_documents(collection_name,query):
     collection_name.delete_many(query)
 
