@@ -99,28 +99,9 @@ def related_links(collection_name,article_id):
     return list(links)
 
 
-def get_related_articles(collection,article_id):
-    article = get_article_details(article_id)
-    tags = article['tags']
-    category = article['category']
-    related_articles = []
-
-    for tag in tags:
-        tag_related_articles = collection.find({'tags': tag, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
-        for related_article in tag_related_articles:
-            if related_article not in related_articles:
-                related_articles.append(related_article)
-                break
-
-    for cat in category:
-        cat_related_articles = collection.find({'category': cat, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
-        for related_article in cat_related_articles:
-            if related_article not in related_articles:
-                related_articles.append(related_article)
-                break
-
-    return related_articles
-
+def get_latest_articles(collection, n):
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).sort("published", -1).limit(n)
+    return list(cursor)
 
 
 if __name__=="__main__":
