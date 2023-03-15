@@ -2,7 +2,7 @@ DATABASE_NAME="Newsfeed"
 ARTICLE_COLLECTION="articleData"
 RSS_FEED_COLLECTION="rssData"
 PAGE_COUNT=10
-
+TRIAL_COLLECTION = "source_coll"
 FIELD_MAP = {
     'title': ['title', 'rss_title'],
     'link': ['link', 'url', 'rss_link'],
