@@ -17,8 +17,8 @@ rssfeed_collection=database[RSS_FEED_COLLECTION]
 article_collection=database[ARTICLE_COLLECTION]
 
 
-#to insert directly using rss feed url
-def insert_rss_doc(collection,url, FIELD_MAP):
+def insert_rss_doc(collection, url):
+    latest_article = collection.find_one(sort=[("published", pymongo.DESCENDING)])
     feed = feedparser.parse(url)
     for item in feed.entries:
         doc = {}
@@ -26,12 +26,16 @@ def insert_rss_doc(collection,url, FIELD_MAP):
             for name in names:
                 if name in item:
                     if field == 'published':
-                        date_obj = datetime.strptime(item[name], '%a, %d %b %Y %H:%M:%S %z')
+                        date_str = item[name]
+                        date_obj = datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
+                        date_obj = date_obj.replace(tzinfo=None)
                         doc[field] = date_obj
                     else:
                         doc[field] = item[name]
                     break
-        collection.insert_one(doc)
+        
+        if latest_article is None or doc['published'] > latest_article['published'].replace(tzinfo=None):
+            collection.insert_one(doc)
 
 
 def insert_one(collection,document):
