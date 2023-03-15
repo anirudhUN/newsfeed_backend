@@ -95,5 +95,3 @@ def get_latest_articles(collection, n):
     return list(cursor)
 
 
-if __name__=="__main__":
-    insert_rss_doc(article_collection,"https://mobilesyrup.com/feed/",FIELD_MAP)
