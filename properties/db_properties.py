@@ -9,7 +9,6 @@ FIELD_MAP = {
     'author': ['author', 'creator', 'rss_author'],
     'published': ['published', 'pubDate', 'rss_published'],
     'description': ['description', 'summary', 'content', 'rss_description'],
-    'comments':['comment','comments'],    
     'category': ['category', 'tags', 'keywords', 'rss_category']
 }
 
