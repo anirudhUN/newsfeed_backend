@@ -52,12 +52,12 @@ def get_sources(collection_name):
       return list(results)
 
 
-def get_successive_articles(collection,ARTICLE_COUNT, page):
+def get_successive_articles(collection,page):
     skip_count = (page - 1) * ARTICLE_COUNT
     cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
-def get_successive_articles_for_category(collection, category, ARTICLE_COUNT, page):
+def get_successive_articles_for_category(collection, category, page):
     skip_count = (page - 1) * ARTICLE_COUNT
     cursor = collection.find({"category": category},{"title":1, "published":1, "description":1, "category":1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
@@ -90,8 +90,8 @@ def related_links(collection_name,article_id):
     return list(links)
 
 
-def get_latest_articles(collection, n):
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).sort("published", -1).limit(n)
+def get_latest_articles(collection):
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1}).sort("published", -1).limit(ARTICLE_COUNT)
     return list(cursor)
 
 

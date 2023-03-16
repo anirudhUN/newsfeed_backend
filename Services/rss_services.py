@@ -9,7 +9,7 @@ import time
 import threading
 
 
-def insert_rss_doc(collection, url):
+def insert_rss_doc(collection, url,last_access_time):
     latest_article = collection.find_one(sort=[("published", pymongo.DESCENDING)])
     feed = feedparser.parse(url)
     for item in feed.entries:
@@ -25,13 +25,19 @@ def insert_rss_doc(collection, url):
                     else:
                         doc[field] = item[name]
                     break
-        
-        if latest_article is None or doc['published'] > latest_article['published'].replace(tzinfo=None):
-            insert_one(collection,doc)
+        if last_access_time is None or doc['published'] > last_access_time.replace(tzinfo=None):
+            collection.insert_one(doc)
+                
 
 def process_rss_feeds():
     for doc in rssfeed_collection.find():
         rss_url = doc['RSSFeedURL']
-        insert_rss_doc(article_collection, rss_url)
+        last_access_time = doc['last_access_time']
+        insert_rss_doc(article_collection, rss_url,last_access_time)
+        current_time = datetime.now()
+        rssfeed_collection.update_one({'_id': doc['_id']}, {'$set': {'last_access_time': current_time}})
     time.sleep(20 * 60)
+    process_rss_feeds()
+
+if __name__=="__main__":
     process_rss_feeds()
