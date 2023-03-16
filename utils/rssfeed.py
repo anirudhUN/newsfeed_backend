@@ -12,13 +12,15 @@ from utils.mongo_utils import *
 
 df=pd.read_csv("git_re\\newsfeed_backend\\data\\RSSfeed_details.csv")
 data=df.to_dict(orient="records")
-#rssfeed_collection.insert_many(data)
+if rssfeed_collection.count_documents({}) == 0:
+    rssfeed_collection.insert_many(data)
 
-current_time = datetime.now()
-for document in rssfeed_collection.find():
+else:
     current_time = datetime.now()
-    rssfeed_collection.update_one({'_id': document['_id']}, {'$set': {'last_access_time': current_time}})
+    for document in rssfeed_collection.find():
+        current_time = datetime.now()
+        rssfeed_collection.update_one({'_id': document['_id']}, {'$set': {'last_access_time': current_time}})
     
-rssfeed_collection.update_many({}, {'$set': {'Status': "True"}})
+    rssfeed_collection.update_many({}, {'$set': {'Status': "True"}})
 
-#print(f"{rssfeed_collection.count_documents({})} documents updated.")
+    #print(f"{rssfeed_collection.count_documents({})} documents updated.")
