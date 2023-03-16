@@ -2,6 +2,7 @@ DATABASE_NAME="Newsfeed"
 ARTICLE_COLLECTION="articleData"
 RSS_FEED_COLLECTION="rssData"
 ARTICLE_COUNT=10
+COMMENT_COUNT = 3
 TRIAL_COLLECTION = "source_coll"
 FIELD_MAP = {
     'title': ['title', 'rss_title'],
