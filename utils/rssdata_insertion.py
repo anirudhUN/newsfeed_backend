@@ -20,4 +20,4 @@ else:
     for document in rssfeed_collection.find():
         current_time = datetime.now()
         rssfeed_collection.update_one({'_id': document['_id']}, {'$set': {'last_access_time': current_time}})
-    rssfeed_collection.update_many({}, {'$set': {'Status': "True"}}
+    rssfeed_collection.update_many({}, {'$set': {'Status': "True"}})
