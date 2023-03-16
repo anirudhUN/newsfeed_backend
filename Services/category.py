@@ -6,10 +6,10 @@ sys.path.append(parent_dir)
 from properties.db_properties import *
 from utils.mongo_utils import *
 
-def retrieve_articles_for_category(user_cat,PAGE_COUNT,page):
+def retrieve_articles_for_category(user_cat,page):
     categories = get_categories(article_collection)
     if user_cat in categories:
-        articles = get_successive_articles_for_category(article_collection,user_cat,PAGE_COUNT,page)
+        articles = get_successive_articles_for_category(article_collection,user_cat,page)
     else:
         articles = []
     return {"category": user_cat, "articles": articles}

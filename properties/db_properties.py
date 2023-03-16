@@ -1,7 +1,7 @@
 DATABASE_NAME="Newsfeed"
 ARTICLE_COLLECTION="articleData"
 RSS_FEED_COLLECTION="rssData"
-PAGE_COUNT=10
+ARTICLE_COUNT=10
 TRIAL_COLLECTION = "source_coll"
 FIELD_MAP = {
     'title': ['title', 'rss_title'],
@@ -9,7 +9,6 @@ FIELD_MAP = {
     'author': ['author', 'creator', 'rss_author'],
     'published': ['published', 'pubDate', 'rss_published'],
     'description': ['description', 'summary', 'content', 'rss_description'],
-    'comments':['comment','comments'],    
     'category': ['category', 'tags', 'keywords', 'rss_category']
 }
 
