@@ -21,12 +21,12 @@ article_collection=database[ARTICLE_COLLECTION]
 
 
 def insert_one(collection,document):
-    result = collection.insert_one(document)
-    return result
+    collection.insert_one(document)
+    
 
 def insert_many(collection,documents):
-    result = collection.insert_many(documents)
-    return result
+    collection.insert_many(documents)
+    
 
 def get_categories(collection_name):
     categories=collection_name.distinct('category')
@@ -66,15 +66,15 @@ def delete_documents(collection_name,query):
     collection_name.delete_many(query)
 
 def delete_document(collection_name,query):
-    result = collection_name.delete_one(query)
-    return result
+    collection_name.delete_one(query)
+    
 
 def update_documents(collection_name,query,update):
-    results = collection_name.update_many(query,update)
+    collection_name.update_many(query,update)
 
 def update_document(collection_name,query,update):
-    result = collection_name.update_one(query,update)
-    return result
+    collection_name.update_one(query,update)
+    
     
 def get_article_details(collection,article_id):
     article = collection.find_one({'_id': ObjectId(article_id)})
