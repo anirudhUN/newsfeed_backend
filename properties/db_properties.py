@@ -13,6 +13,18 @@ FIELD_MAP = {
     'category': ['category', 'tags', 'keywords', 'rss_category']
 }
 
+PATH = "..\chromedriver.exe"
+
+SOURCE_SELECTOR_MAPPER={
+             "Techcrunch" : "div.article-content",
+             "Tech republic": "section.article-body",
+             "Tech Talksick":"div.text",
+             "Firstpost Tech":"div.text-content-wrap",
+             "Hackaday":"div.entry-content",
+             "MobileSyrup": "div.article-content",
+             "Droid Life":"div.entry-content__post",
+             "Droidviews":"div.entry-content"
+        }
 
 #categories
 APPS="apps"
