@@ -24,8 +24,7 @@ def article_content_scraping(driver,collection):
             article = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,"div.entry-content")))
             content=article.text
             collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content}})
-        except (NoSuchElementException, Exception) as e:
+        except (NoSuchElementException, Exception):
             print(f"Not able to access {article_url}: {e}")
-
 if __name__=="__main__":
      article_content_scraping(driver,article_collection)
