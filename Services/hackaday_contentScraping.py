@@ -14,7 +14,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 driver=webdriver.Chrome(PATH)
 
-def article_content_scraping(driver,collection):
+def hackaday_content_scraping(driver,collection):
     query = {"Source": "Hackaday"}
     for doc in collection.find(query):
         article_url=doc['link']
