@@ -28,4 +28,4 @@ def hackaday_content_scraping(driver,collection):
             print(f"Not able to access {article_url}: {e}")
 
 if __name__=="__main__":
-     article_content_scraping(driver,article_collection)
+     hackaday_content_scraping(driver,article_collection)
