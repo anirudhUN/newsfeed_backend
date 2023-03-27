@@ -19,15 +19,38 @@ def content_scraping(driver,collection):
             article_url = doc['link']
             article_source=doc['Source']
             driver.get(article_url)
-            for source,selector in SOURCE_SELECTOR_MAPPER.items():
-                 if source==article_source:
-                        try:
-                            wait = WebDriverWait(driver, 20)
-                            article = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
-                            content=article.text
-                            collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content}})
-                        except (NoSuchElementException, Exception) as e:
-                            print(f"Error occurred while retrieving article content for {article_url}: {e}")    
+            source_selectors = SOURCE_SELECTOR_MAPPER.get(article_source)
+            if source_selectors is None:
+                continue
+            try:
+                wait = WebDriverWait(driver, 20)
+                article = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, source_selectors['article'])))
+                content = article.text
 
+                try:
+                    # scrape tags
+                    tags = wait.until(EC.visibility_of_all_elements_located((By.CSS_SELECTOR, source_selectors['tags'])))
+                    tags_data = []
+                    for tag in tags:
+                        tag_name = tag.text
+                        tag_link = tag.get_attribute('href')
+                        tags_data.append({'name': tag_name, 'link': tag_link}) 
+                        
+                except NoSuchElementException:
+                    tags_data = ""                              
+            
+                try:
+                    # scrape image
+                    image_element = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, source_selectors['image'])))
+                    image_url = image_element.get_attribute('src')
+                    
+                except NoSuchElementException:
+                    image_url = ""
+
+                collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url}})
+
+            except (NoSuchElementException, Exception) as e:
+                print(f"Error occurred while retrieving article content for {article_url}: {e}") 
+                           
 if __name__=="__main__":
-     content_scraping(driver,article_collection)       
+     content_scraping(driver,article_collection)
