@@ -9,12 +9,10 @@ from utils.mongo_utils import *
 
 nltk.download('punkt')
 
-documents = article_collection.find()
-
-for doc in documents:
-    text = doc['article-content']
-    sentences = nltk.sent_tokenize(text)
+def init_summary(article_id, article_content):     
+    sentences = nltk.sent_tokenize(article_content)
     scores = np.array([len(nltk.word_tokenize(s)) for s in sentences])
     idx = scores.argsort()[::-1]
     summary = '\n'.join([sentences[i] for i in sorted(idx[:3])])
-    article_collection.update_one({'_id': doc['_id']}, {'$set': {'summary': summary}})
+    article_collection.update_one({'_id': article_id}, {'$set': {'summary': summary}})
+

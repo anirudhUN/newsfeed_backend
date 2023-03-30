@@ -5,6 +5,7 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(parent_dir)
 from properties.db_properties import *
 from utils.mongo_utils import *
+from Services.content_summarizer import *
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -53,7 +54,7 @@ def content_scraping(driver,collection):
                     image_url = ""
 
                 collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url}})
-
+                init_summary(article_id=doc['_id'],article_content=content)
             except (NoSuchElementException, Exception) as e:
                 print(f"Error occurred while retrieving article content for {article_url}: {e}") 
                            
