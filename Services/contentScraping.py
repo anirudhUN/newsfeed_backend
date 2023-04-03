@@ -32,6 +32,7 @@ def content_scraping(driver,collection):
                 wait = WebDriverWait(driver, 20)
                 article = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, source_selectors['article'])))
                 content = article.text
+                summary=summary_generator(content)
 
                 try:
                     # scrape tags
@@ -52,7 +53,6 @@ def content_scraping(driver,collection):
                     
                 except NoSuchElementException:
                     image_url = ""
-                summary=summary_generator(article_content=content)
                 collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url,'summary':summary}})
             except (NoSuchElementException, Exception) as e:
                 print(f"Error occurred while retrieving article content for {article_url}: {e}") 
