@@ -6,7 +6,7 @@ sys.path.append(parent_dir)
 from properties.db_properties import *
 from utils.mongo_utils import *
 
-def init_home_page(page=None):
+def init_home_page(article_collection,page=None):
     if page is None:
         page = 1
     categories = get_categories(article_collection)
