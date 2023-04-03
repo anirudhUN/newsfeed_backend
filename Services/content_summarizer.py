@@ -9,7 +9,7 @@ from utils.mongo_utils import *
 
 nltk.download('punkt')
 
-def summary_generator(article_content):     
+def generate_summary(article_content):     
     sentences = nltk.sent_tokenize(article_content)
     scores = np.array([len(nltk.word_tokenize(s)) for s in sentences])
     idx = scores.argsort()[::-1]

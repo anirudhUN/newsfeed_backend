@@ -31,7 +31,7 @@ def content_scraping(driver,collection):
                 wait = WebDriverWait(driver, 20)
                 article = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, source_selectors['article'])))
                 content = article.text
-                summary=summary_generator(content)
+                summary=generate_summary(content)
 
                 try:
                     # scrape tags
