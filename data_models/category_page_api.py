@@ -12,7 +12,7 @@ from jsonschema import validate
 
 app = Flask(__name__)
 
-collection=database[ARTICLE_COLLECTION]
+
 
 class HOME():
     def __init__(self):
@@ -23,7 +23,7 @@ class HOME():
 @app.route('/category')
 def get_data():
     data = []
-    categories = get_categories(collection)
+    categories = get_categories(article_collection)
     home = HOME()
     home.get_category(categories)
     data.append({
