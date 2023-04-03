@@ -28,7 +28,7 @@ def get_data():
     home.get_category(categories)
     data.append({
         'category' : home.category
-        }
+        })
     return jsonify(data)
 
 
