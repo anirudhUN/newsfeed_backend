@@ -17,7 +17,6 @@ from selenium.common.exceptions import NoSuchElementException
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
-
 driver = webdriver.Chrome(PATH, options=chrome_options)
 
 def content_scraping(driver,collection):
