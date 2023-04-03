@@ -11,4 +11,4 @@ def init_home_page(page=None):
         page = 1
     categories = get_categories(article_collection)
     articles = get_successive_articles(article_collection,page)
-    return {'categories':categories, 'articles':articles}
+    return {'categories': categories, 'articles': articles}
