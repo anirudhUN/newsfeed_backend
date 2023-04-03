@@ -9,10 +9,9 @@ from utils.mongo_utils import *
 
 nltk.download('punkt')
 
-def init_summary(article_id, article_content):     
+def summary_generator(article_content):     
     sentences = nltk.sent_tokenize(article_content)
     scores = np.array([len(nltk.word_tokenize(s)) for s in sentences])
     idx = scores.argsort()[::-1]
     summary = '\n'.join([sentences[i] for i in sorted(idx[:3])])
-    article_collection.update_one({'_id': article_id}, {'$set': {'summary': summary}})
-
+    return summary

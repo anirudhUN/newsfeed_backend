@@ -52,9 +52,8 @@ def content_scraping(driver,collection):
                     
                 except NoSuchElementException:
                     image_url = ""
-
-                collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url}})
-                init_summary(article_id=doc['_id'],article_content=content)
+                summary=summary_generator(article_content=content)
+                collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url,'summary':summary}})
             except (NoSuchElementException, Exception) as e:
                 print(f"Error occurred while retrieving article content for {article_url}: {e}") 
                            
