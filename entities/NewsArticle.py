@@ -10,4 +10,4 @@ class NewsArticle:
         self.category = category
         self.cover_img_url = cover_img_url
         self.tags = tags
-        self.comments=comments
+        self.comments=comment
