@@ -15,7 +15,7 @@ cluster=MongoClient("mongodb+srv://anirudhaun:cY5hdsdwvg1aHTex@cluster0.suvfptn.
 database=cluster[DATABASE_NAME]
 rssfeed_collection=database[RSS_FEED_COLLECTION]
 article_collection=database[ARTICLE_COLLECTION]
-
+category_collection=database[CATEGORY_COLLECTION]
 
 
 
