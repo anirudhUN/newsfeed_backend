@@ -1,4 +1,4 @@
-Name,RSSFeedURL,Parent Category,SourceURL,articles,author,publication_name,title,article_url,cover_img_url
+Name,RSSFeedURL,Category,SourceURL,articles,author,publication_name,title,article_url,cover_img_url
 Techcrunch,https://techcrunch.com/mobile/feed/,Laptops/mobiles,https://techcrunch.com/,object.rss.channel.item,obect.rss.channel.item[n].creator.__cdata,rss.channel.title,rss.channel.item[n].title,rss.channel.item[n].link,not found
 Techcrunch,https://techcrunch.com/startups/feed/,Startup,https://techcrunch.com/,object.rss.channel.item,obect.rss.channel.item[n].creator.__cdata,rss.channel.title,rss.channel.item[n].title,rss.channel.item[n].link,not found
 Tech republic,https://www.techrepublic.com/rssfeeds/topic/android/,Laptops/mobiles,https://www.techrepublic.com,object.rss.channel.item,obect.rss.channel.item[n].creator.__cdata,rss.channel.title,rss.channel.item[n].title,rss.channel.item[n].link,not found
