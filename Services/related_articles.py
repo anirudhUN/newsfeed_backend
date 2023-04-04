@@ -13,17 +13,16 @@ def get_related_articles(article_id):
     related_articles = []
 
     for tag in tags:
-        tag_related_articles = article_collection.find({'tags': tag, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
+        tag_name = tag['name']
+        tag_related_articles = article_collection.find({'tags.name': tag_name, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
         for related_article in tag_related_articles:
             if related_article not in related_articles:
                 related_articles.append(related_article)
-                break
-
-    for cat in category:
-        cat_related_articles = article_collection.find({'category': cat, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
+        
+    if isinstance(category, str):
+        cat_related_articles = article_collection.find({'category': category, '_id': {'$ne': article['_id']}}, projection={'_id': 0, 'title': 1, 'description': 1})
         for related_article in cat_related_articles:
             if related_article not in related_articles:
                 related_articles.append(related_article)
-                break
 
     return related_articles
