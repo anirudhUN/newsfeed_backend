@@ -25,11 +25,10 @@ def get_home_data():
     })
 
 @bp.route('/category')
-def get_category_data():
-    home_data = init_home_page(article_collection)
-    return jsonify({
-        'categories': home_data['categories'],
-    })
+def get_category():
+    categories = category_collection.find()
+    category_list = [category['Category'] for category in categories]
+    return jsonify({'Categories': category_list})
 
 @bp.route('/category/<user_cat>/article')
 def get_category_article_data(user_cat):
