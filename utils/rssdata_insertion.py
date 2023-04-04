@@ -22,5 +22,6 @@ rssfeed_collection.update_many({}, {'$set': {'Status': "True"}})
 categories = df['Category'].tolist()
 
 for category in categories:
-    category_doc = {'Category': category}
-    category_collection.insert_one(category_doc)
+    if category_collection.find_one({'Category': category}) is None:
+        category_doc = {'Category': category}
+        category_collection.insert_one(category_doc)
