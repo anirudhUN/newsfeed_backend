@@ -11,7 +11,7 @@ FIELD_MAP = {
     'author': ['author', 'creator', 'rss_author'],
     'published': ['published', 'pubDate', 'rss_published'],
     'description': ['description', 'summary', 'content', 'rss_description'],
-    'category': ['category', 'tags', 'keywords', 'rss_category']
+    'tags': ['category', 'tags', 'keywords', 'rss_category']
 }
 
 PATH = "..\chromedriver.exe"
