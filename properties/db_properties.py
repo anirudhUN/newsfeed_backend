@@ -10,8 +10,33 @@ FIELD_MAP = {
     'link': ['link', 'url', 'rss_link'],
     'author': ['author', 'creator', 'rss_author'],
     'published': ['published', 'pubDate', 'rss_published'],
-    'description': ['description', 'summary', 'content', 'rss_description'],
-    'tags': ['category', 'tags', 'keywords', 'rss_category']
+    'description': ['description', 'summary', 'content', 'rss_description']
+}
+CATEGORY_MAP = {
+    'Laptops/mobiles': [
+        'https://techcrunch.com/mobile/feed/',
+        'https://www.techrepublic.com/rssfeeds/topic/android/',
+        'https://www.techrepublic.com/rssfeeds/topic/mobile/',
+        'https://www.droidviews.com/feed/',
+        'https://www.droid-life.com/feed/',
+        'https://mobilesyrup.com/feed/'
+    ],
+    'Startup': [
+        'https://techcrunch.com/startups/feed/',
+        'https://www.techrepublic.com/rssfeeds/topic/start-ups/'
+    ],
+    'Technology': [
+        'https://www.techrepublic.com/rssfeeds/topic/artificial-intelligence/',
+        'https://www.techrepublic.com/rssfeeds/topic/cloud/',
+        'https://techtalksick.com/feed/',
+        'https://www.firstpost.com/tech/feed',
+        'https://hackaday.com/blog/feed/',
+        'https://www.techrepublic.com/rssfeeds/topic/internet/',
+        'https://www.techrepublic.com/rssfeeds/topic/digital-media/',
+        'https://www.techrepublic.com/rssfeeds/topic/innovation/',
+        'https://www.techrepublic.com/rssfeeds/topic/internet-of-things/',
+        'https://www.techrepublic.com/rssfeeds/topic/tech-and-work/'
+    ]
 }
 
 PATH = "..\chromedriver.exe"

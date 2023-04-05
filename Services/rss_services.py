@@ -27,7 +27,10 @@ def insert_rss_doc(collection, url,last_access_time,source_name):
                     break
         if last_access_time is None or doc['published'] > last_access_time.replace(tzinfo=None):
             collection.insert_one(doc)
-                
+            for category, urls in CATEGORY_MAP.items():
+                if url in urls:
+                    article_collection.update_one({'_id': doc['_id']}, {'$set': {'Category': category}})
+                    break
 
 def process_rss_feeds():
     for doc in rssfeed_collection.find():
