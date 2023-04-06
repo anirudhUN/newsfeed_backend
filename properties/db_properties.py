@@ -13,7 +13,7 @@ FIELD_MAP = {
     'description': ['description', 'summary', 'content', 'rss_description']
 }
 CATEGORY_MAP = {
-    'Laptops/mobiles': [
+    'Laptops&mobiles': [
         'https://techcrunch.com/mobile/feed/',
         'https://www.techrepublic.com/rssfeeds/topic/android/',
         'https://www.techrepublic.com/rssfeeds/topic/mobile/',

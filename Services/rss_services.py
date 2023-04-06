@@ -34,7 +34,7 @@ def insert_rss_doc(collection, url, last_access_time, source_name):
             collection.insert_one(doc)
             for category, urls in CATEGORY_MAP.items():
                 if url in urls:
-                    article_collection.update_one({'_id': doc['_id']}, {'$set': {'Category': category}})
+                    article_collection.update_one({'_id': doc['_id']}, {'$set': {'category': category}})
                     break
 
                 
