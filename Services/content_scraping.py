@@ -19,15 +19,13 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(PATH, options=chrome_options)
 
-def content_scraping(driver,collection):
-    for doc in collection.find():
-            article_url = doc['link']
-            article_source=doc['Source']
-            driver.get(article_url)
-            source_selectors = SOURCE_SELECTOR_MAPPER.get(article_source)
-            if source_selectors is None:
-                continue
-            try:
+def content_scraping(article_url,article_source):
+    driver = webdriver.Chrome(PATH, options=chrome_options)
+    driver.get(article_url)
+    source_selectors = SOURCE_SELECTOR_MAPPER.get(article_source)
+    if source_selectors is None:
+                return 0
+    try:
                 wait = WebDriverWait(driver, 20)
                 article = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, source_selectors['article'])))
                 content = article.text
@@ -52,9 +50,9 @@ def content_scraping(driver,collection):
                     
                 except NoSuchElementException:
                     image_url = ""
-                collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url,'summary':summary}})
-            except (NoSuchElementException, Exception) as e:
+                # collection.update_one({'_id': doc['_id']}, {'$set': {'article-content': content,'tags': tags_data,'image-url': image_url,'summary':summary}})
+                return content,tags_data,image_url,summary
+    except (NoSuchElementException, Exception) as e:
                 print(f"Error occurred while retrieving article content for {article_url}: {e}") 
+                return None
                            
-if __name__=="__main__":
-     content_scraping(driver,article_collection)
