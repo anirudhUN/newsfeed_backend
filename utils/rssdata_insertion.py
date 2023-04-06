@@ -11,7 +11,7 @@ from utils.mongo_utils import *
 rssfeed_collection.delete_many({})
 category_collection.delete_many({})
 
-df=pd.read_csv("git_re\\newsfeed_backend\\data\\RSSfeed_details.csv")
+df=pd.read_csv("data\RSSfeed_details.csv")
 data=df.to_dict(orient="records")
 rssfeed_collection.insert_many(data)
 current_time = datetime.now()
