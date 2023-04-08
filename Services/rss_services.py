@@ -42,8 +42,8 @@ def insert_rss_doc(collection, url, last_access_time, source_name):
 def process_rss_feeds():
     for doc in rssfeed_collection.find():
         rss_url = doc['RSSFeedURL']
-        # last_access_time = None
-        last_access_time = doc['last_access_time']
+        last_access_time = None
+        # last_access_time = doc['last_access_time']
         source_name=doc['Name']
         insert_rss_doc(article_collection, rss_url,last_access_time,source_name)
         current_time = datetime.now()
