@@ -25,16 +25,20 @@ def insert_rss_doc(collection, url, last_access_time, source_name):
                         doc[field] = item[name]
                     doc['Source'] = source_name
                     break
+        try:
+            content, tags_data, image_url, summary = content_scraping(item['link'], source_name)
+            doc['Content'] = content
+            doc['Tags'] = tags_data
+            doc['ImageURL'] = image_url
+            doc['Summary'] = summary
+        except Exception as e:
+            print(str(e))
+            continue
         if last_access_time is None or doc['published'] > last_access_time.replace(tzinfo=None):
-            content, tags_data, image_url, summary = content_scraping(doc['link'],doc['Source'])
-            doc['article-content'] = content
-            doc['tags'] = tags_data
-            doc['image-url'] = image_url
-            doc['summary'] = summary
             collection.insert_one(doc)
             for category, urls in CATEGORY_MAP.items():
                 if url in urls:
-                    article_collection.update_one({'_id': doc['_id']}, {'$set': {'category': category}})
+                    article_collection.update_one({'_id': doc['_id']}, {'$set': {'Category': category}})
                     break
 
                 
@@ -42,8 +46,8 @@ def insert_rss_doc(collection, url, last_access_time, source_name):
 def process_rss_feeds():
     for doc in rssfeed_collection.find():
         rss_url = doc['RSSFeedURL']
-        last_access_time = None
-        # last_access_time = doc['last_access_time']
+        # last_access_time = None
+        last_access_time = doc['last_access_time']
         source_name=doc['Name']
         insert_rss_doc(article_collection, rss_url,last_access_time,source_name)
         current_time = datetime.now()
