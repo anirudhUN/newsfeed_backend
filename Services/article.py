@@ -8,7 +8,7 @@ from utils.mongo_utils import *
 from services.related_articles import *
 
 def init_article(article_id):
-    article = get_article_details(article_id)
+    article = get_article_details(article_collection,article_id)
     related_articles = get_related_articles(article_id)
 
     return related_articles, article
