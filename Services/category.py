@@ -14,7 +14,7 @@ def retrieve_articles_for_category(user_cat, page=None):
         articles = get_successive_articles_for_category(article_collection,user_cat,page)
     else:
         articles = []
-    return {"category": user_cat, "articles": articles}
+    return {"Category": user_cat, "articles": articles}
 
 def generate_category_list(article_collection):
     categories = get_categories(article_collection)
