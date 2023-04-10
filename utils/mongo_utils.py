@@ -29,11 +29,11 @@ def insert_many(collection,documents):
     
 
 def get_categories(collection_name):
-    categories=collection_name.distinct('category')
+    categories=collection_name.distinct('Category')
     return list(categories)
 
 def get_cat_news(collection_name,category):
-        results=collection_name.find({"category":category},{})
+        results=collection_name.find({"Category": category},{})
         return list(results)
 
 
@@ -54,12 +54,12 @@ def get_sources(collection_name):
 
 def get_successive_articles(collection,page):
     skip_count = (page - 1) * ARTICLE_COUNT
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1,'image-url':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
 def get_successive_articles_for_category(collection, category, page):
     skip_count = (page - 1) * ARTICLE_COUNT
-    cursor = collection.find({"category": category},{"title":1, "published":1, "description":1, "category":1,'image-url':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+    cursor = collection.find({"Category": category},{"title":1, "published":1, "description":1, "Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
 def delete_documents(collection_name,query):
@@ -85,13 +85,13 @@ def get_article_details(collection,article_id):
         return article
     
 def related_links(collection_name,article_id):
-    category = collection_name.find({"_id":article_id},{"category":1})
-    links=collection_name.find({"category":category},{"title":1,"link":1})
+    category = collection_name.find({"_id":article_id},{"Category":1})
+    links=collection_name.find({"Category":category},{"title":1,"link":1})
     return list(links)
 
 
 def get_latest_articles(collection):
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1,'image-url':1}).sort("published", -1).limit(ARTICLE_COUNT)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).limit(ARTICLE_COUNT)
     return list(cursor)
 
 
