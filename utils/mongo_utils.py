@@ -54,12 +54,12 @@ def get_sources(collection_name):
 
 def get_successive_articles(collection,page):
     skip_count = (page - 1) * ARTICLE_COUNT
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
 def get_successive_articles_for_category(collection, category, page):
     skip_count = (page - 1) * ARTICLE_COUNT
-    cursor = collection.find({"Category": category},{"title":1, "published":1, "description":1, "Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+    cursor = collection.find({"Category": category},{"title":1, "published":1, "description":1, "category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
 def delete_documents(collection_name,query):
@@ -76,8 +76,8 @@ def update_document(collection_name,query,update):
     collection_name.update_one(query,update)
     
     
-def get_article_details(collection,article_id):
-    article = collection.find_one({'_id': ObjectId(article_id)})
+def get_article_details(article_id):
+    article = article_collection.find_one({'_id': ObjectId(article_id)})
     if article is None:
         print(f"No article found with ID {article_id}")
         return None
@@ -91,7 +91,7 @@ def related_links(collection_name,article_id):
 
 
 def get_latest_articles(collection):
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).limit(ARTICLE_COUNT)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"category":1,'ImageURL':1}).sort("published", -1).limit(ARTICLE_COUNT)
     return list(cursor)
 
 
