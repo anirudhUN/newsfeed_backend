@@ -37,9 +37,10 @@ def get_cat_news(collection_name,category):
         return list(results)
 
 
-def get_tag_news(collection_name,tag):
-      results=collection_name.find({"Tags":tag},{})
-      return list(results)
+def get_tag_news(collection,tag,page):
+      skip_count = (page - 1) * ARTICLE_COUNT
+      cursor = collection.find({"Tags.name":tag},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+      return list(cursor)
 
 
 def get_source_news(collection_name,source):
