@@ -7,8 +7,9 @@ from utils.mongo_utils import *
 from services.home import *
 from services.category import *
 from services.article import *
+from services.tags import*
 from bson import ObjectId
-from flask import Flask,Blueprint, jsonify
+from flask import Flask,Blueprint, jsonify, request
 
 bp = Blueprint('api', __name__)
 
@@ -48,3 +49,13 @@ def get_article_data(article_id):
         'Article': article_data['article'],
         'Related_articles' : article_data['related_articles']
     })
+
+@bp.route('/article/<int:page>', methods=['GET'])
+@bp.route('/article', defaults={'page': 1}, methods=['GET'])
+def get_articles_by_tag(page):
+    tag = request.args.get('tag') 
+    tag_articles_data = retrive_articles_for_tag(tag, page=page)
+    articles = tag_articles_data['articles']
+    for article in articles:
+        article['_id'] = str(article['_id'])
+    return jsonify({'tag': tag, 'articles': articles})
