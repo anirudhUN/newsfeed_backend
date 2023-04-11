@@ -13,9 +13,10 @@ from flask import Flask,Blueprint, jsonify
 bp = Blueprint('api', __name__)
 
 
-@bp.route('/home')
-def get_home_data():
-    home_data = init_home_page(article_collection,page=None)
+@bp.route('/home/<int:page>')
+@bp.route('/home', defaults={'page': 1})
+def get_home_data(page):
+    home_data = init_home_page(article_collection,page=page)
     articles = home_data['articles']
     for article in articles:
         article['_id'] = str(article['_id'])  
@@ -30,13 +31,15 @@ def get_category():
     category_list = [category['Category'] for category in categories]
     return jsonify({'Categories': category_list})
 
-@bp.route('/category/<user_cat>/article')
-def get_category_article_data(user_cat):
-    category_data = retrieve_articles_for_category(user_cat,page=None)
+@bp.route('/category/<user_cat>/article/<int:page>')
+@bp.route('/category/<user_cat>/article', defaults={'page': 1})
+def get_category_article_data(user_cat, page):
+    category_data = retrieve_articles_for_category(user_cat, page=page)
     articles = category_data['articles']
     for article in articles:
         article['_id'] = str(article['_id'])  
-    return jsonify({'category': user_cat, 'articles' : articles})
+    return jsonify({'category': user_cat, 'articles': articles})
+
 
 @bp.route('/article/<string:article_id>')
 def get_article_data(article_id):
