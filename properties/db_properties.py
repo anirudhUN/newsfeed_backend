@@ -43,7 +43,7 @@ PATH = "..\chromedriver.exe"
 
 SOURCE_SELECTOR_MAPPER={
 "Tech republic": {
-   'article': "section.article-body",
+   'article': "section.article-body p",
    'tags' : 'section.categories ul li a',
    'image' : 'section.article-body figure img'
 },
