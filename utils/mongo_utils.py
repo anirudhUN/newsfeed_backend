@@ -39,7 +39,7 @@ def get_cat_news(collection_name,category):
 
 def get_tag_news(collection,tag,page):
       skip_count = (page - 1) * ARTICLE_COUNT
-      cursor = collection.find({"Tags.name":tag},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+      cursor = collection.find({"Tags.name":tag},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1,'author':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
       return list(cursor)
 
 
@@ -55,12 +55,12 @@ def get_sources(collection_name):
 
 def get_successive_articles(collection,page):
     skip_count = (page - 1) * ARTICLE_COUNT
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1,'author':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
 def get_successive_articles_for_category(collection, category, page):
     skip_count = (page - 1) * ARTICLE_COUNT
-    cursor = collection.find({"Category": category},{"title":1, "published":1, "description":1, "Category":1,'ImageURL':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
+    cursor = collection.find({"Category": category},{"title":1, "published":1, "description":1, "Category":1,'ImageURL':1,'author':1}).sort("published", -1).skip(skip_count).limit(ARTICLE_COUNT)
     return list(cursor)
 
 def delete_documents(collection_name,query):
@@ -92,7 +92,7 @@ def related_links(collection_name,article_id):
 
 
 def get_latest_articles(collection):
-    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1}).sort("published", -1).limit(ARTICLE_COUNT)
+    cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1,'author':1}).sort("published", -1).limit(ARTICLE_COUNT)
     return list(cursor)
 
 
