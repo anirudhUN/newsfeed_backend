@@ -17,12 +17,14 @@ bp = Blueprint('api', __name__)
 @bp.route('/home/<int:page>')
 @bp.route('/home', defaults={'page': 1})
 def get_home_data(page):
+    categories = category_collection.find()
+    category_list = [category['Category'] for category in categories]
     home_data = init_home_page(article_collection,page=page)
     articles = home_data['articles']
     for article in articles:
         article['_id'] = str(article['_id'])  
     return jsonify({
-        'categories': home_data['categories'],
+       'Categories': category_list,
         'articles': articles
     })
 
@@ -32,14 +34,16 @@ def get_category():
     category_list = [category['Category'] for category in categories]
     return jsonify({'Categories': category_list})
 
-@bp.route('/category/<user_cat>/article/<int:page>')
-@bp.route('/category/<user_cat>/article', defaults={'page': 1})
-def get_category_article_data(user_cat, page):
-    category_data = retrieve_articles_for_category(user_cat, page=page)
+@bp.route('/category/<category>/<int:page>')
+@bp.route('/category/<category>', defaults={'page': 1})
+def get_category_article_data(category, page):
+    categories = category_collection.find()
+    category_list = [category['Category'] for category in categories]
+    category_data = retrieve_articles_for_category(category, page=page)
     articles = category_data['articles']
     for article in articles:
         article['_id'] = str(article['_id'])  
-    return jsonify({'category': user_cat, 'articles': articles})
+    return jsonify({'category': category ,'articles': articles,'Categories': category_list })
 
 
 @bp.route('/article/<string:article_id>')
