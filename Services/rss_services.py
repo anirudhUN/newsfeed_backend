@@ -6,7 +6,7 @@ sys.path.append(parent_dir)
 from properties.db_properties import *
 from utils.mongo_utils import *
 import time
-import threading
+from bs4 import BeautifulSoup
 from services.content_scraping import content_scraping
 
 def insert_rss_doc(collection, url, last_access_time, source_name):
@@ -21,6 +21,9 @@ def insert_rss_doc(collection, url, last_access_time, source_name):
                         date_obj = datetime.strptime(date_str, '%a, %d %b %Y %H:%M:%S %z')
                         date_obj = date_obj.replace(tzinfo=None)
                         doc[field] = date_obj
+                    elif field == 'description':
+                        soup = BeautifulSoup(item['description'], 'html.parser')
+                        doc['description'] = soup.get_text()
                     else:
                         doc[field] = item[name]
                     doc['Source'] = source_name
