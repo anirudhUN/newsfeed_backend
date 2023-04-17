@@ -23,9 +23,11 @@ def get_home_data(page):
     articles = home_data['articles']
     for article in articles:
         article['_id'] = str(article['_id'])  
+    count = home_data['totalResults']
     return jsonify({
        'Categories': category_list,
-        'articles': articles
+        'articles': articles,
+        'totalResults': count
     })
 
 @bp.route('/category')
@@ -41,9 +43,10 @@ def get_category_article_data(category, page):
     category_list = [category['Category'] for category in categories]
     category_data = retrieve_articles_for_category(category, page=page)
     articles = category_data['articles']
+    count_category=get_total_articles_for_category(article_collection,user_cat)
     for article in articles:
         article['_id'] = str(article['_id'])  
-    return jsonify({'category': category ,'articles': articles,'Categories': category_list })
+    return jsonify({'category': category ,'articles': articles,'Categories': category_list,'totalResults':count_category })
 
 
 @bp.route('/article/<string:article_id>')

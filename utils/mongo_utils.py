@@ -95,4 +95,8 @@ def get_latest_articles(collection):
     cursor = collection.find({},{"title":1,"published":1,"description":1,"Category":1,'ImageURL':1,'author':1}).sort("published", -1).limit(ARTICLE_COUNT)
     return list(cursor)
 
+def get_total_articles_for_category(collection,category):
+    count_category = collection.count_documents({"Category": category})
+    return count_category
+
 
