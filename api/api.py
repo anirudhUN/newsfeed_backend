@@ -43,7 +43,7 @@ def get_category_article_data(category, page):
     category_list = [category['Category'] for category in categories]
     category_data = retrieve_articles_for_category(category, page=page)
     articles = category_data['articles']
-    count_category=get_total_articles_for_category(article_collection,user_cat)
+    count_category=get_total_articles_for_category(article_collection,category)
     for article in articles:
         article['_id'] = str(article['_id'])  
     return jsonify({'category': category ,'articles': articles,'Categories': category_list,'totalResults':count_category })
