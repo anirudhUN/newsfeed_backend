@@ -53,8 +53,8 @@ def get_category_article_data(category, page):
 def get_article_data(article_id):
     article_data = init_article(article_id)
     return jsonify({
-        'Article': article_data['article'],
-        'Related_articles' : article_data['related_articles']
+        'article': article_data['article'],
+        'Related_articles' : article_data['related_articles'],
     })
 
 @bp.route('/article/<int:page>', methods=['GET'])
