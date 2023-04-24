@@ -51,10 +51,13 @@ def get_category_article_data(category, page):
 
 @bp.route('/article/<string:article_id>')
 def get_article_data(article_id):
+    categories = category_collection.find()
+    category_list = [category['Category'] for category in categories]
     article_data = init_article(article_id)
     return jsonify({
         'article': article_data['article'],
         'Related_articles' : article_data['related_articles'],
+        'Categories': category_list
     })
 
 @bp.route('/article/<int:page>', methods=['GET'])
