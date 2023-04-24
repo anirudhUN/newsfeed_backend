@@ -54,8 +54,10 @@ def get_article_data(article_id):
     categories = category_collection.find()
     category_list = [category['Category'] for category in categories]
     article_data = init_article(article_id)
+    categories = category_collection.find()
+    category_list = [category['Category'] for category in categories]
     return jsonify({
-        'article': article_data['article'],
+        'Article': article_data['article'],
         'Related_articles' : article_data['related_articles'],
         'Categories': category_list
     })
