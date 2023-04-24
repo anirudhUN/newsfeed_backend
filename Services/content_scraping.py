@@ -38,7 +38,7 @@ def content_scraping(article_url,article_source):
                     for tag in tags:
                         tag_name = tag.text
                         tag_link = tag.get_attribute('href')
-                        tags_data.append({'name': tag_name}) 
+                        tags_data.append({'name': tag_name},{'link':tag_link}) 
                         
                 except NoSuchElementException:
                     tags_data = ""                              
